@@ -1,4 +1,4 @@
-package ${package};
+package src.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-
-import tr.edu.duzce.mf.bm.springextjs.model.Bolum;
-import tr.edu.duzce.mf.bm.springextjs.model.Danisman;
-import tr.edu.duzce.mf.bm.springextjs.model.Fakulte;
-import tr.edu.duzce.mf.bm.springextjs.model.Ogrenci;
+import src.main.model.*;
 
 import java.util.Properties;
 
@@ -21,7 +16,7 @@ import static org.hibernate.cfg.Environment.*;
 @PropertySource("classpath:hibernate.properties")
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackages = {"tr.edu.duzce"})
+@ComponentScan(basePackages = {"src"})
 public class AppConfig {
 
     @Autowired
@@ -37,6 +32,7 @@ public class AppConfig {
         props.put(URL, env.getProperty("mysql.url"));
         props.put(USER, env.getProperty("mysql.user"));
         props.put(PASS, env.getProperty("mysql.password"));
+
 
         // Setting Hibernate properties
         props.put(SHOW_SQL, env.getProperty("hibernate.show_sql"));
@@ -55,7 +51,7 @@ public class AppConfig {
         props.put(C3P0_CONFIG_PREFIX + ".acquireRetryDelay", env.getProperty("hibernate.c3p0.acquireRetryDelay")); // milliseconds
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(Ogrenci.class, Bolum.class, Danisman.class, Fakulte.class);
+        factoryBean.setAnnotatedClasses(User.class/* add other classes with comma other classes*/); //to do
         return factoryBean;
     }
 
